@@ -1,0 +1,41 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && get(/databases/$(database)/documents/kullanicilar/$(request.auth.uid)).data.rol == 'yonetici';
+    }
+
+    function isStaff() {
+      let userRole = get(/databases/$(database)/documents/kullanicilar/$(request.auth.uid)).data.rol;
+      return isAuthenticated() && (userRole in ['yonetici', 'tekniker', 'muhendis']);
+    }
+
+    match /kullanicilar/{userId} {
+      allow read: if isAuthenticated();
+      allow create: if isAdmin();
+      allow update: if isAdmin() || request.auth.uid == userId;
+      allow delete: if isAdmin() && request.auth.uid != userId;
+    }
+
+    match /sahalar/{sahaId} {
+      allow read: if isAuthenticated();
+      allow write: if isStaff();
+    }
+
+    match /arizalar/{arizaId} {
+      allow read: if isAuthenticated();
+      allow create, update: if isStaff();
+      allow delete: if isAdmin();
+    }
+
+    match /bildirimler/{bildirimId} {
+      allow read: if isAuthenticated() && request.auth.uid == resource.data.kullaniciId;
+      allow write: if isAuthenticated() && request.auth.uid == request.resource.data.kullaniciId;
+    }
+  }
+}

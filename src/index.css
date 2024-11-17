@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter var', system-ui, -apple-system, sans-serif;
+  }
+}
+
+@layer components {
+  .modern-input {
+    @apply block w-full px-4 py-3 rounded-lg border-gray-200 focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-200;
+  }
+
+  .modern-button-primary {
+    @apply inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition-colors duration-200;
+  }
+
+  .modern-button-secondary {
+    @apply inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition-colors duration-200;
+  }
+
+  .modern-card {
+    @apply bg-white overflow-hidden shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300;
+  }
+
+  .modern-modal {
+    @apply fixed inset-0 flex items-center justify-center z-50;
+  }
+
+  .modern-modal-overlay {
+    @apply absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity;
+  }
+
+  .modern-modal-content {
+    @apply relative bg-white rounded-lg max-w-lg w-full mx-4 shadow-xl;
+  }
+
+  .stats-card {
+    @apply relative bg-white pt-5 px-4 pb-12 sm:pt-6 sm:px-6 shadow rounded-lg overflow-hidden flex items-center;
+  }
+
+  .stats-card-icon {
+    @apply p-3 rounded-md flex items-center justify-center;
+  }
+
+  .upload-zone {
+    @apply mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md cursor-pointer hover:border-yellow-500 transition-colors duration-200;
+  }
+}
+
+/* Date Input Styles */
+input[type="date"],
+input[type="datetime-local"] {
+  @apply appearance-none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  @apply opacity-0;
+  position: absolute;
+  left: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
